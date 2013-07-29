@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
   end
  
   def generate_slug
-    str = to_slug(self.title)
+    str = to_slug(self.username)
     count = 2
     obj = Post.where(slug: str).first
     while obj && obj != self
