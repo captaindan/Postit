@@ -1,0 +1,19 @@
+<% show_post ||= false %>
+
+<div class="row" >
+  <div class='span0 well text-center comment_votes'>
+    <span id="comment_<%= comment.id %>_votes">
+          <%= "#{comment.total_votes} votes" %>
+    </span>
+  </div>
+
+  <div class='well span8'>
+    <em>"<%= comment.body %>"</em>
+    <% if show_post %>
+      on <%= link_to comment.post.title, post_path(comment.post) %>
+    <% end %>
+    <br/>
+    <span class="quiet">by</span> <%= link_to comment.user.username, user_path(comment.user) %>
+    <small> at <%= comment.created_at %></small>
+  </div>
+</div>

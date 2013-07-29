@@ -1,0 +1,8 @@
+<p class='lead'>
+  <a href="/posts">All Posts</a> » <%= @category.name %>
+  <hr/>
+</p>
+
+  <% @category.posts.each do |post| %>
+    <%= render 'posts/post', post: post %>
+  <% end %>

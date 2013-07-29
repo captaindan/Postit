@@ -1,0 +1,57 @@
+<p class='lead'>
+  <%= link_to @post.title, @post.url %>
+  <hr/>
+</p>
+
+<p>
+  <%= @post.description %>
+</p>
+
+<hr/>
+
+<h5>Categories</h5>
+<% @post.categories.each do |category| %>
+      <span class="label">
+        <%= link_to category.name, category_path(category) %>
+      </span>
+    <% end %>
+
+<hr/>
+
+  <% if logged_in? %>
+    <h5>Leave a comment</h5>
+    <%= form_for [@post, @comment] do |f| %>
+    <%= render 'shared/errors', :object => @comment %>
+      <%= f.label :body %>
+      <%= f.text_area :body %>
+      <br/>
+      <%= f.submit 'Create comment', class: 'btn' %>
+    <% end %>
+    <hr/>
+  <% end %>
+
+  <h5>Comments:</h5>
+  <% @post.comments.each do |comment| %>
+  <div class="row" >
+      <div class='span0 well text-center comment_votes'>
+        <%= link_to vote_post_comment_path(@post, comment, vote: true), method: 'post', remote: true do %>
+          <% if logged_in? %><i class='icon-arrow-up'></i><% end %>
+          <br/>
+        <% end %>
+        <span id="comment_<%= comment.id %>_votes">
+          <%= "#{comment.total_votes} votes" %>
+        </span>
+        <br/>
+        <%= link_to vote_post_comment_path(@post, comment, vote: false), method: 'post', remote: true do %>
+          <% if logged_in? %><i class='icon-arrow-down'></i><% end %>
+          <br/>
+        <% end %>
+      </div>
+    <div class='well span8'>
+      <em><%= comment.body %></em>
+      </br>
+      <span class="quiet">by</span> <%= comment.user.username %>
+      <small> at <%= display_datetime(comment.created_at) %></small>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,1 @@
+$("#post_<%= @post.to_param %>_votes").html("<%=pluralize(@post.total_votes, 'vote')%>");
